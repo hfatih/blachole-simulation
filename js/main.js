@@ -15,11 +15,40 @@
   const fmt = (v, d) => v.toFixed(d).replace('.', ',');
 
   function fail(msg) {
+    console.error(msg);
     const e = $('#error');
-    e.style.display = 'flex';
-    e.textContent = msg;
-    $('#loading').style.display = 'none';
+    if (e) {
+      e.style.display = 'flex';
+      e.textContent = msg;
+    }
+    const ld = $('#loading');
+    if (ld) ld.style.display = 'none';
   }
+
+  const Loader = {
+    el: $('#loading'),
+    bar: $('#loadProgressFill'),
+    pct: $('#loadPercent'),
+    msg: $('#loadStatus'),
+    set(percent, text) {
+      if (this.bar) this.bar.style.width = Math.min(100, Math.max(0, percent)) + '%';
+      if (this.pct) this.pct.textContent = Math.round(percent) + '%';
+      if (this.msg && text) this.msg.textContent = text;
+    },
+    done() {
+      this.set(100, 'Uzay-zaman hazır');
+      if (this.el) {
+        this.el.classList.add('loaded');
+        setTimeout(() => {
+          if (this.el) this.el.style.display = 'none';
+        }, 900);
+      }
+    }
+  };
+
+  const yieldFrame = () => new Promise((resolve) => {
+    requestAnimationFrame(() => setTimeout(resolve, 0));
+  });
 
   /* ------------------------------------------------------------------ */
   /* Parametreler                                                         */
@@ -100,6 +129,32 @@
   if (!gl.getExtension('EXT_color_buffer_float')) { fail('Bu GPU yüzen noktalı render hedeflerini (EXT_color_buffer_float) desteklemiyor.'); return; }
   gl.getExtension('OES_texture_float_linear');
 
+  // GPU zaman ölçümü (varsa): ışın izleme geçişinin süresi
+  const tq = gl.getExtension('EXT_disjoint_timer_query_webgl2');
+  const gpuQ = { pending: [], avg: 0 };
+  const gpuPost = { pending: [], avg: 0 };
+  function gpuBegin() {
+    if (!tq) return null;
+    const q = gl.createQuery();
+    gl.beginQuery(tq.TIME_ELAPSED_EXT, q);
+    return q;
+  }
+  function gpuEnd(q, acc) {
+    if (!q) return;
+    acc = acc || gpuQ;
+    gl.endQuery(tq.TIME_ELAPSED_EXT);
+    acc.pending.push(q);
+    while (acc.pending.length) {
+      const f = acc.pending[0];
+      if (!gl.getQueryParameter(f, gl.QUERY_RESULT_AVAILABLE)) break;
+      const disjoint = gl.getParameter(tq.GPU_DISJOINT_EXT);
+      const ns = gl.getQueryParameter(f, gl.QUERY_RESULT);
+      if (!disjoint) acc.avg = acc.avg ? acc.avg * 0.9 + ns / 1e6 * 0.1 : ns / 1e6;
+      gl.deleteQuery(f);
+      acc.pending.shift();
+    }
+  }
+
   const vao = gl.createVertexArray();
   gl.bindVertexArray(vao);
 
@@ -146,24 +201,7 @@
     };
   }
 
-  let progs;
-  try {
-    progs = {
-      skygen: makeProg(SH.SKYGEN, 'skygen'),
-      trace: makeProg(SH.TRACE, 'trace'),
-      taa: makeProg(SH.TAA, 'taa'),
-      neigh: makeProg(SH.NEIGH, 'neigh'),
-      down: makeProg(SH.DOWN, 'down'),
-      up: makeProg(SH.UP, 'up'),
-      comp: makeProg(SH.COMPOSITE, 'composite'),
-      skyview: makeProg(SH.SKYVIEW, 'skyview'),
-      maxlum: makeProg(SH.MAXLUM, 'maxlum'),
-      autoexp: makeProg(SH.AUTOEXP, 'autoexp'),
-    };
-  } catch (e) {
-    fail('Gölgelendirici derlenemedi: ' + e.message);
-    return;
-  }
+  const progs = {};
 
   function createTex(w, h, internal, format, type, data, filter) {
     const t = gl.createTexture();
@@ -208,7 +246,7 @@
   /* --- Gökyüzü küp haritası --- */
   const SKY_SIZE = qs.has('skysize') ? parseInt(qs.get('skysize'), 10) : 1024;
   const skyTex = gl.createTexture();
-  function buildSky() {
+  async function buildSkyProgressive(onProgress) {
     const levels = Math.floor(Math.log2(SKY_SIZE)) + 1;
     gl.bindTexture(gl.TEXTURE_CUBE_MAP, skyTex);
     gl.texStorage2D(gl.TEXTURE_CUBE_MAP, levels, gl.RGBA16F, SKY_SIZE, SKY_SIZE);
@@ -225,6 +263,8 @@
         gl.scissor(tx * ts, ty * ts, ts, ts);
         draw();
       }
+      if (onProgress) onProgress((f + 1) / 6);
+      await yieldFrame();
     }
     gl.disable(gl.SCISSOR_TEST);
     gl.bindTexture(gl.TEXTURE_CUBE_MAP, skyTex);
@@ -234,6 +274,9 @@
     gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
     gl.texParameteri(gl.TEXTURE_CUBE_MAP, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
     gl.deleteFramebuffer(fb);
+  }
+  function buildSky() {
+    return buildSkyProgressive();
   }
 
   /* ------------------------------------------------------------------ */
@@ -1224,7 +1267,7 @@
     const frameMs = lastT ? now - lastT : 16.7;
     lastT = now;
     checkSize();
-    if (debugSky) { renderSkyView(); const ld = $('#loading'); if (ld) ld.remove(); document.body.classList.add('hide-ui'); return; }
+    if (debugSky) { renderSkyView(); Loader.done(); document.body.classList.add('hide-ui'); return; }
 
     if (!params.paused) simTime += dt * params.timeScale;
     if (plunge.active) {
@@ -1262,54 +1305,92 @@
     if (!started) {
       started = true;
       startT = now;
-      const ld = $('#loading');
-      ld.style.opacity = 0;
-      setTimeout(() => ld.remove(), 1300);
-      setTimeout(() => { $('#hint').style.opacity = 0; }, 9000);
+      Loader.done();
+      setTimeout(() => { const h = $('#hint'); if (h) h.style.opacity = 0; }, 9000);
     }
   }
 
-  buildPanel();
-  if (qs.get('ui') === '0') document.body.classList.add('hide-ui');
-  if (qs.get('panel') === '0' || window.innerWidth < 1280) document.body.classList.add('panel-closed');
-  if (qs.get('diagram') === '0' || window.innerWidth < 1400) document.body.classList.add('no-diagram');
-  if (params.eht) document.body.classList.add('eht');
-  updateModeButtons();
-  checkSize();
-  // Gökyüzünü bir sonraki karede üret (yükleme ekranı görünsün)
-  requestAnimationFrame(() => {
-    try { buildSky(); } catch (e) { fail('Gökyüzü üretilemedi: ' + e.message); return; }
-    fade = qs.has('nofade') ? 1 : 0;
-    if (qs.get('tour') === '1') startTour();
-    requestAnimationFrame(frame);
-  });
   canvas.addEventListener('webglcontextlost', (e) => { e.preventDefault(); fail('GPU bağlamı kaybedildi. Sayfayı yenileyin.'); });
 
-  // GPU zaman ölçümü (varsa): ışın izleme geçişinin süresi
-  const tq = gl.getExtension('EXT_disjoint_timer_query_webgl2');
-  const gpuQ = { pending: [], avg: 0 };
-  const gpuPost = { pending: [], avg: 0 };
-  function gpuBegin() {
-    if (!tq) return null;
-    const q = gl.createQuery();
-    gl.beginQuery(tq.TIME_ELAPSED_EXT, q);
-    return q;
-  }
-  function gpuEnd(q, acc) {
-    if (!q) return;
-    acc = acc || gpuQ;
-    gl.endQuery(tq.TIME_ELAPSED_EXT);
-    acc.pending.push(q);
-    while (acc.pending.length) {
-      const f = acc.pending[0];
-      if (!gl.getQueryParameter(f, gl.QUERY_RESULT_AVAILABLE)) break;
-      const disjoint = gl.getParameter(tq.GPU_DISJOINT_EXT);
-      const ns = gl.getQueryParameter(f, gl.QUERY_RESULT);
-      if (!disjoint) acc.avg = acc.avg ? acc.avg * 0.9 + ns / 1e6 * 0.1 : ns / 1e6;
-      gl.deleteQuery(f);
-      acc.pending.shift();
+  async function init() {
+    try {
+      Loader.set(6, 'WebGL 2 donanımı ve grafik boru hattı başlatılıyor...');
+      await yieldFrame();
+
+      Loader.set(12, 'Kozmik gökyüzü üreteci derleniyor...');
+      await yieldFrame();
+      progs.skygen = makeProg(SH.SKYGEN, 'skygen');
+
+      Loader.set(22, 'Kerr jeodezik ışın izleyici derleniyor...');
+      await yieldFrame();
+      progs.trace = makeProg(SH.TRACE, 'trace');
+
+      Loader.set(30, 'Zamansal kenar yumuşatma (TAAU) derleniyor...');
+      await yieldFrame();
+      progs.taa = makeProg(SH.TAA, 'taa');
+      progs.neigh = makeProg(SH.NEIGH, 'neigh');
+
+      Loader.set(38, 'Piramit parlama (Bloom) süzgeçleri derleniyor...');
+      await yieldFrame();
+      progs.down = makeProg(SH.DOWN, 'down');
+      progs.up = makeProg(SH.UP, 'up');
+
+      Loader.set(44, 'Görüntü birleştirici ve EHT modülleri derleniyor...');
+      await yieldFrame();
+      progs.comp = makeProg(SH.COMPOSITE, 'composite');
+      progs.skyview = makeProg(SH.SKYVIEW, 'skyview');
+      progs.maxlum = makeProg(SH.MAXLUM, 'maxlum');
+      progs.autoexp = makeProg(SH.AUTOEXP, 'autoexp');
+
+      Loader.set(50, 'Fizik profilleri ve arayüz kuruluyor...');
+      updateProfile();
+      buildPanel();
+      if (qs.get('ui') === '0') document.body.classList.add('hide-ui');
+      if (qs.get('panel') === '0' || window.innerWidth < 1280) document.body.classList.add('panel-closed');
+      if (qs.get('diagram') === '0' || window.innerWidth < 1400) document.body.classList.add('no-diagram');
+      if (params.eht) document.body.classList.add('eht');
+      updateModeButtons();
+      checkSize();
+      await yieldFrame();
+
+      Loader.set(55, 'Kozmik arka plan ve Samanyolu üretiliyor (%0)...');
+      await buildSkyProgressive((ratio) => {
+        const p = Math.round(55 + ratio * 32);
+        const pct = Math.round(ratio * 100);
+        Loader.set(p, `Kozmik arka plan ve Samanyolu üretiliyor (%${pct})...`);
+      });
+      await yieldFrame();
+
+      Loader.set(90, 'Işın izleme boru hattı ısıtılıyor...');
+      await yieldFrame();
+      checkSize();
+      const camInfo = updateCamera(1 / 60);
+      render(camInfo, 1 / 60);
+      gl.flush();
+      await yieldFrame();
+      render(camInfo, 1 / 60);
+      gl.flush();
+      await yieldFrame();
+
+      Loader.set(100, 'Uzay-zaman hazır!');
+      fade = 1.0;
+      started = true;
+      startT = performance.now();
+      lastT = performance.now();
+
+      await new Promise((r) => setTimeout(r, 220));
+      Loader.done();
+      setTimeout(() => { const h = $('#hint'); if (h) h.style.opacity = 0; }, 9000);
+
+      if (qs.get('tour') === '1') startTour();
+      requestAnimationFrame(frame);
+    } catch (e) {
+      console.error(e);
+      fail('Başlatma hatası: ' + e.message);
     }
   }
+
+  init();
   async function bench(scales, ms) {
     const out = [];
     const wait = (t) => new Promise((r) => setTimeout(r, t));

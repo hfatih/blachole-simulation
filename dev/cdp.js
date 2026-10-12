@@ -7,11 +7,26 @@ const path = require('path');
 const steps = JSON.parse(process.argv[2]);
 const W = parseInt(process.argv[3] || '1920', 10), H = parseInt(process.argv[4] || '1080', 10), DPR = parseFloat(process.argv[5] || '1');
 const root = path.resolve(__dirname, '..');
-const base = 'file://' + encodeURI(path.join(root, 'index.html')).replace(/#/g, '%23');
-const ud = '/tmp/bh-cdp-' + process.pid;
-const chrome = spawn('/Applications/Google Chrome.app/Contents/MacOS/Google Chrome', [
+const base = 'file:///' + path.resolve(root, 'index.html').replace(/\\/g, '/').replace(/#/g, '%23');
+const os = require('os');
+function getChromePath() {
+  if (process.platform === 'win32') {
+    const p1 = 'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe';
+    const p2 = 'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe';
+    const p3 = 'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe';
+    if (fs.existsSync(p1)) return p1;
+    if (fs.existsSync(p2)) return p2;
+    if (fs.existsSync(p3)) return p3;
+  } else if (process.platform === 'darwin') {
+    return '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
+  }
+  return 'google-chrome';
+}
+const ud = path.join(os.tmpdir(), 'bh-cdp-' + process.pid);
+const angleFlag = process.platform === 'darwin' ? ['--use-angle=metal'] : (process.platform === 'win32' ? ['--use-angle=d3d11'] : []);
+const chrome = spawn(getChromePath(), [
   '--headless=new', '--user-data-dir=' + ud, '--hide-scrollbars', `--window-size=${W},${H}`,
-  '--remote-debugging-port=0', '--use-angle=metal', '--enable-gpu', '--ignore-gpu-blocklist',
+  '--remote-debugging-port=0', ...angleFlag, '--enable-gpu', '--ignore-gpu-blocklist',
   '--disable-background-timer-throttling', '--disable-renderer-backgrounding', '--disable-backgrounding-occluded-windows',
   'about:blank',
 ], { stdio: ['ignore', 'ignore', 'pipe'] });
