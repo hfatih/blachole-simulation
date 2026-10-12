@@ -21,27 +21,32 @@
       e.style.display = 'flex';
       e.textContent = msg;
     }
-    const ld = $('#loading');
+    const ld = $('#loader') || $('#loading');
     if (ld) ld.style.display = 'none';
   }
 
   const Loader = {
-    el: $('#loading'),
+    el: $('#loader') || $('#loading'),
     bar: $('#loadProgressFill'),
     pct: $('#loadPercent'),
     msg: $('#loadStatus'),
     set(percent, text) {
-      if (this.bar) this.bar.style.width = Math.min(100, Math.max(0, percent)) + '%';
-      if (this.pct) this.pct.textContent = Math.round(percent) + '%';
+      const p = Math.min(100, Math.max(0, percent));
+      if (this.bar) {
+        this.bar.style.transform = 'scaleX(' + (p / 100) + ')';
+        this.bar.style.width = p + '%';
+      }
+      if (this.pct) this.pct.textContent = String(Math.round(p)).padStart(3, '0');
       if (this.msg && text) this.msg.textContent = text;
     },
     done() {
       this.set(100, 'Uzay-zaman hazır');
       if (this.el) {
+        this.el.classList.add('is-leaving');
         this.el.classList.add('loaded');
         setTimeout(() => {
           if (this.el) this.el.style.display = 'none';
-        }, 900);
+        }, 1100);
       }
     }
   };
@@ -911,7 +916,7 @@
     legend.innerHTML =
       '<i style="background:#8fc3ff"></i>kaçan ışın &nbsp; <i style="background:#c0503a"></i>ufka düşen<br>' +
       '<i style="background:#ffd28a;height:1px"></i>foton yörüngesi ' + fmt(P.photonOrbit(a, true), 2) + ' / ' + fmt(P.photonOrbit(a, false), 2) + ' M<br>' +
-      '<i style="background:#ffa05a;height:1px"></i>ISCO ' + fmt(P.isco(a), 2) + ' M &nbsp; <i style="background:rgba(255,255,255,.4);height:1px"></i>ergosfer';
+      '<i style="background:#f0abc5;height:1px"></i>ISCO ' + fmt(P.isco(a), 2) + ' M &nbsp; <i style="background:rgba(255,255,255,.4);height:1px"></i>ergosfer';
   }
   function drawDiagram(time) {
     if (document.body.classList.contains('no-diagram') || document.body.classList.contains('hide-ui')) return;
@@ -975,7 +980,7 @@
     circ(2, 'rgba(255,255,255,0.25)', [3, 4], 1);                         // ergosfer (ekvator)
     circ(P.photonOrbit(a, true), 'rgba(255,210,138,0.6)', [2, 3], 1);    // ileri yönlü foton yörüngesi
     circ(P.photonOrbit(a, false), 'rgba(255,210,138,0.6)', [2, 3], 1);   // geri yönlü
-    circ(P.isco(a), 'rgba(255,160,90,0.8)', [1, 3], 1);
+    circ(P.isco(a), 'rgba(240,171,197,0.85)', [1, 3], 1);
     circ(P.horizon(a), 'rgba(255,255,255,0.4)', [], 1, '#000');
     // dönme yönü oku
     c.setLineDash([]);
@@ -983,14 +988,14 @@
       const rA = s * Math.sqrt(P.horizon(a) ** 2 + a * a) * 0.62;
       c.beginPath();
       c.arc(W / 2, Hh / 2, rA, -2.3, 0.6, false);
-      c.strokeStyle = 'rgba(255,200,140,0.8)'; c.lineWidth = 1.4; c.stroke();
+      c.strokeStyle = 'rgba(240,171,197,0.85)'; c.lineWidth = 1.4; c.stroke();
       const ex = W / 2 + rA * Math.cos(0.6), ey = Hh / 2 + rA * Math.sin(0.6);
       c.beginPath(); c.moveTo(ex, ey); c.lineTo(ex + 5, ey - 5); c.lineTo(ex - 5, ey - 2); c.closePath();
-      c.fillStyle = 'rgba(255,200,140,0.8)'; c.fill();
+      c.fillStyle = 'rgba(240,171,197,0.85)'; c.fill();
     }
     // kamera
     const [cx, cy] = map(diagCam[0], diagCam[1]);
-    c.beginPath(); c.arc(cx, cy, 4, 0, Math.PI * 2); c.fillStyle = '#ffb366'; c.fill();
+    c.beginPath(); c.arc(cx, cy, 4, 0, Math.PI * 2); c.fillStyle = '#f0abc5'; c.fill();
     c.font = '18px -apple-system, system-ui, sans-serif';
     c.fillStyle = 'rgba(255,255,255,0.5)';
     c.fillText('kamera', cx + 8, cy - 6);
