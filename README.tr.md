@@ -5,6 +5,7 @@
 **WebGL 2 ile Tarayıcıda Gerçek Zamanlı Genel Görelilik Işın İzleme**
 
 [![Canlı Demo](https://img.shields.io/badge/Canl%C4%B1%20Demo-GitHub%20Pages-e7a0b9?style=for-the-badge&logo=github&logoColor=white)](https://hfatih.github.io/blachole-simulation/)
+[![Canlı Site](https://img.shields.io/badge/Canl%C4%B1%20Site-blachole.hfatih.com-60a5fa?style=for-the-badge&logo=googlechrome&logoColor=white)](https://blachole.hfatih.com)
 
 <br/>
 
@@ -14,7 +15,7 @@
 [![Lisans: MIT](https://img.shields.io/badge/Lisans-MIT-green.svg?style=flat-square)](LICENSE)
 [![Bağımlılık Yok](https://img.shields.io/badge/Bağımlılık-0-brightgreen.svg?style=flat-square)](#)
 
-[✦ Canlı Simülasyon](https://hfatih.github.io/blachole-simulation/) · [English](README.md) · [Türkçe](README.tr.md)
+[✦ Canlı Simülasyon (GitHub Pages)](https://hfatih.github.io/blachole-simulation/) · [blachole.hfatih.com](https://blachole.hfatih.com) · [English](README.md) · [Türkçe](README.tr.md)
 
 <br/>
 
