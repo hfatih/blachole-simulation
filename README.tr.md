@@ -1,11 +1,12 @@
 <div align="center">
 
-# ◉ Kerr Kara Deliği Simülasyonu
+# ✦ Kerr Kara Deliği Simülasyonu
 
 **WebGL 2 ile Tarayıcıda Gerçek Zamanlı Genel Görelilik Işın İzleme**
 
 [![Canlı Demo](https://img.shields.io/badge/Canl%C4%B1%20Demo-GitHub%20Pages-e7a0b9?style=for-the-badge&logo=github&logoColor=white)](https://hfatih.github.io/blachole-simulation/)
-[![Canlı Site](https://img.shields.io/badge/Canl%C4%B1%20Site-blachole.hfatih.com-60a5fa?style=for-the-badge&logo=googlechrome&logoColor=white)](https://blachole.hfatih.com)
+[![Canlı Site](https://img.shields.io/badge/Canl%C4%B1%20Site-blackhole.hfatih.com-f0abc5?style=for-the-badge&logo=googlechrome&logoColor=white)](https://blackhole.hfatih.com)
+[![Tasarım](https://img.shields.io/badge/Tasar%C4%B1m-Starlit%20G%C3%B6ksel%20G%C3%BCl-ffb6c1?style=for-the-badge&logo=sparkles&logoColor=white)](#starlit--göksel-gül-tasarım-sistemi)
 
 <br/>
 
@@ -15,14 +16,21 @@
 [![Lisans: MIT](https://img.shields.io/badge/Lisans-MIT-green.svg?style=flat-square)](LICENSE)
 [![Bağımlılık Yok](https://img.shields.io/badge/Bağımlılık-0-brightgreen.svg?style=flat-square)](#)
 
-[✦ Canlı Simülasyon (GitHub Pages)](https://hfatih.github.io/blachole-simulation/) · [blachole.hfatih.com](https://blachole.hfatih.com) · [English](README.md) · [Türkçe](README.tr.md)
+[✦ Canlı Simülasyon (blackhole.hfatih.com)](https://blackhole.hfatih.com) · [GitHub Pages](https://hfatih.github.io/blachole-simulation/) · [English](README.md) · [Türkçe](README.tr.md)
 
 <br/>
 
-<img src="assets/preview.png" alt="Kerr Kara Deliği Simülasyon Önizlemesi" width="880" style="border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.8);" />
+<p align="center">
+  <img src="assets/preview.png" alt="Kerr Kara Deliği Simülasyonu Starlit Arayüz Önizlemesi" width="880" style="border-radius: 14px; box-shadow: 0 10px 40px rgba(240,171,197,0.20);" />
+</p>
 
 <p align="center">
-  <em>Dönen bir Kerr kara deliğinin eğri uzay-zamanında etkileşimli jeodezik ışık ışını izleme.<br/>Kütleçekimsel merceklenme, yığılma diski bükülmesi, göreli Doppler kayması ve serbest düşüşü gerçek zamanlı simüle eder.</em>
+  <img src="assets/loader.png" alt="3D Dönen Kara Delik Yükleme Ekranı" width="520" style="border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.85); margin-top: 6px;" /><br/>
+  <em>Çift katmanlı göreli disk ve mikro yıldız tozu içeren anlık 3D dönen optik kara delik yükleme ekranı.</em>
+</p>
+
+<p align="center">
+  <em>Dönen bir Kerr kara deliğinin eğri uzay-zamanında etkileşimli jeodezik ışık ışını izleme.<br/>Özel <strong>Starlit / Göksel Gül</strong> tasarım sistemi: derin obsidiyen erik, göksel pembe parıltı, cam morfoloji ve anında açılan 3D yükleme ekranı.</em>
 </p>
 
 </div>
@@ -33,6 +41,9 @@
 
 - [Genel Bakış](#genel-bakış)
 - [Öne Çıkan Özellikler](#öne-çıkan-özellikler)
+- [Starlit / Göksel Gül Tasarım Sistemi](#starlit--göksel-gül-tasarım-sistemi)
+  - [Arayüz ve Renk Paleti Felsefesi](#arayüz-ve-renk-paleti-felsefesi)
+  - [3D Dönen Kara Delik Yükleme Ekranı](#3d-dönen-kara-delik-yükleme-ekranı)
 - [Fizik ve Göreli Optik](#fizik-ve-göreli-optik)
   - [Kerr-Schild Metriği ve Jeodezikler](#kerr-schild-metriği-ve-jeodezikler)
   - [Novikov–Thorne Yığılma Diski](#novikovthorne-yığılma-diski)
@@ -76,8 +87,47 @@ Geleneksel üç boyutlu grafiklerde kullanılan doku hileleri veya önceden rend
 - **Kara Deliğe Serbest Düşüş**: Gerçek bir zamansı jeodezik üzerinde durgun halden bırakılarak olay ufkundan içeri giriş; anlık özzaman ($\tau$) ve metrik katsayılarını gösteren HUD telemetrisi.
 - **Işık Yolları Diyagramı**: Ekvator düzleminde kameradan çıkan ışık ışınlarının foton küresi etrafında nasıl büküldüğünü gösteren canlı 2D diyagram tuvali.
 - **EHT Teleskop Görünümü**: Event Horizon Telescope'un 1,3 mm VLBI çözünürlüğünü taklit eden çok ölçekli Gauss filtreleme modu (M87* ve Sgr A* gözlemleri benzeri).
-- **Kasmayan Akıcı Başlatma**: Donmayı ve takılmayı tamamen engelleyen asenkron gölgelendirici derleme, parçalı gökyüzü üretimi ve GPU boru hattı ön-ısıtması (warmup) eşliğinde lüks kara delik yükleme ekranı.
+- **Starlit / Göksel Gül Estetiği**: Derin obsidiyen erik tonu (`#150a14`), göksel pembe kontroller (`#f0abc5`), saydam cam paneller (`blur(20px)`) ve anında açılan 3D dönen kara delik yükleme ekranı.
 - **Uyarlanır Performans**: Dinamik çözünürlük ölçekleme ve TAAU sayesinde farklı GPU güçlerinde 60 FPS hedefi korunur.
+
+---
+
+## Starlit / Göksel Gül Tasarım Sistemi
+
+Simülasyonun kullanıcı arayüzü, derin uzay telemetrisi ile estetik zarafeti birleştiren imza **Starlit / Göksel Gül** tasarım sistemiyle hazırlanmıştır:
+
+<div align="center">
+  <img src="assets/preview.png" alt="Starlit Tasarım Sistemi Genel Görünüm" width="880" style="border-radius: 14px; box-shadow: 0 12px 36px rgba(240,171,197,0.18);" />
+</div>
+
+<br/>
+
+### Arayüz ve Renk Paleti Felsefesi
+
+| Tasarım Katmanı | Renk Kodu | Görsel İşlev ve Uygulama |
+| :--- | :---: | :--- |
+| **Kozmik Derin Uzay** | `#150a14` · `#07040a` | Derin obsidiyen erik ve kadife uzay boşluğu zemin |
+| **Cam Kartlar (Glassmorphism)** | `rgba(25, 12, 24, 0.68)` | Çok geçişli arkaplan bulanıklığı (`backdrop-filter: blur(20px)`), `18px` kavisli köşeler ve iç ışıma |
+| **Kenarlık Çizgileri** | `rgba(240, 171, 197, 0.20)` | Telemetri kontrollerini kozmik ışınlardan ayıran zarif pembe kılcal sınırlar |
+| **Göksel Gül (Celestial Rose)** | `#f0abc5` | Birincil telemetri ışıltısı, aktif mod halkaları ve ISCO yörünge çizgileri |
+| **Yıldız Işığı Pembesi** | `#ffd3e0` | İkincil vurgular, kaydırıcı (slider) gradyan dolguları ve tipografi parıltısı |
+| **Doppler Camgöbeği** | `#8fb7ff` | Göreli kinematik maviye kayma ve kaçan ışık vektörleri |
+| **Mod Seçici (Kapsül)** | Yüzen Hap Butonlar | Cam taban üzerinde parıldayan pembe aktif durum (`.on`) ve kırmızımsı dalış (`.plunge`) |
+| **2D Ekvator Diyagramı** | Canlı Tuval | `#f0abc5` ISCO çizgisi, dönme yön oku ve kamera konumuyla gerçek zamanlı ışık yolları |
+
+### 3D Dönen Kara Delik Yükleme Ekranı
+
+<div align="center">
+  <img src="assets/loader.png" alt="3D Kara Delik Yükleme Ekranı Detayı" width="560" style="border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.9);" />
+</div>
+
+<br/>
+
+Kişisel portfolyo tasarımından ödünç alınıp fizik motoruna uyarlanmıştır:
+- **3D Optik Örtme (Occlusion)**: Yığılma diski iki bağımsız derinlik katmanından oluşur (arkada `.loader__disk` ve gölgenin içine yerleştirilmiş `clip-path: inset(50% 0 0 0)` ile ön tarafta dönen `.loader__disk--front`). Bu sayede diskin ön yarısı olay ufkunun önünden geçerken arka yarısı deliğin arkasında kalır ve gerçek 3D optik mercek hissi verir.
+- **Çift Zıt Konik Türbülans**: $2,8\text{ sn}$ ve $7,0\text{ sn}$ periyotlarla zıt yönlerde dönen iki konik gradyan katmanı ve $6^\circ$ eksen eğikliği ile diskin türbülanslı diferansiyel kayması modellenir.
+- **Sıfır Gecikmeli İlk Boyama (First Paint)**: HTML'de doğrudan `<body>` etiketinin en tepesinde yer alır. Tüm yapay gecikmeler ve CSS bulanıklık beklemeleri kaldırılarak sayfanın ilk açılış milisaniyesinde (frame 0) karadeliğin, parıltının ve yıldızların eksiksiz görünmesi sağlanmıştır; boş ekran beklemesi yoktur.
+- **Tabular Mono Telemetri**: Monospace ilerleme sayacı (`000%` – `100%`), ışıltılı gradyan ilerleme çubuğu ve simülasyon başladığında yumuşak çözülerek kaybolma geçişi (`.is-leaving`).
 
 ---
 
@@ -342,7 +392,8 @@ blachole-simulation/
 │   ├── qgrowth.js          # Momentum vektörü büyüme analizi
 │   └── cdp.js              # Headless Chrome DevTools Protocol otomasyon ve test aracı
 ├── assets/
-│   └── preview.png         # Simülasyon tanıtım ekran görüntüsü
+│   ├── preview.png         # Simülasyon Starlit pembe arayüz önizlemesi
+│   └── loader.png          # 3D dönen kara delik yükleme ekranı ekran görüntüsü
 ├── README.md               # İngilizce dokümantasyon
 └── README.tr.md            # Türkçe dokümantasyon
 ```

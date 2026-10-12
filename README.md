@@ -1,11 +1,12 @@
 <div align="center">
 
-# ◉ Kerr Black Hole Simulation
+# ✦ Kerr Black Hole Simulation
 
 **Real-Time General Relativistic Ray Tracing in WebGL 2**
 
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-e7a0b9?style=for-the-badge&logo=github&logoColor=white)](https://hfatih.github.io/blachole-simulation/)
-[![Live Site](https://img.shields.io/badge/Live%20Site-blachole.hfatih.com-60a5fa?style=for-the-badge&logo=googlechrome&logoColor=white)](https://blachole.hfatih.com)
+[![Live Site](https://img.shields.io/badge/Live%20Site-blackhole.hfatih.com-f0abc5?style=for-the-badge&logo=googlechrome&logoColor=white)](https://blackhole.hfatih.com)
+[![Design](https://img.shields.io/badge/Design-Starlit%20Celestial%20Rose-ffb6c1?style=for-the-badge&logo=sparkles&logoColor=white)](#starlit--celestial-rose-design-system)
 
 <br/>
 
@@ -15,14 +16,21 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)](LICENSE)
 [![Zero Dependencies](https://img.shields.io/badge/Dependencies-0-brightgreen.svg?style=flat-square)](#)
 
-[✦ Live Simulation (GitHub Pages)](https://hfatih.github.io/blachole-simulation/) · [blachole.hfatih.com](https://blachole.hfatih.com) · [English](README.md) · [Türkçe](README.tr.md)
+[✦ Live Simulation (blackhole.hfatih.com)](https://blackhole.hfatih.com) · [GitHub Pages](https://hfatih.github.io/blachole-simulation/) · [English](README.md) · [Türkçe](README.tr.md)
 
 <br/>
 
-<img src="assets/preview.png" alt="Kerr Black Hole Simulation Preview" width="880" style="border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.8);" />
+<p align="center">
+  <img src="assets/preview.png" alt="Kerr Black Hole Simulation Starlit UI Preview" width="880" style="border-radius: 14px; box-shadow: 0 10px 40px rgba(240,171,197,0.20);" />
+</p>
 
 <p align="center">
-  <em>Interactive geodesic light ray tracing through the curved spacetime of a spinning Kerr black hole.<br/>Simulates gravitational lensing, accretion disk warping, relativistic beaming, and timelike free-fall in real time.</em>
+  <img src="assets/loader.png" alt="3D Rotating Black Hole Loader" width="520" style="border-radius: 12px; box-shadow: 0 8px 30px rgba(0,0,0,0.85); margin-top: 6px;" /><br/>
+  <em>Instant 3D rotating optical black hole loader with dual-layer relativistic disk and micro-starfield.</em>
+</p>
+
+<p align="center">
+  <em>Interactive geodesic light ray tracing through the curved spacetime of a spinning Kerr black hole.<br/>Styled with the <strong>Starlit / Celestial Rose</strong> design system: deep obsidian plum, celestial rose luminescence, glassmorphism, and instant 3D black hole loader.</em>
 </p>
 
 </div>
@@ -33,6 +41,9 @@
 
 - [Overview](#overview)
 - [Key Features](#key-features)
+- [Starlit / Celestial Rose Design System](#starlit--celestial-rose-design-system)
+  - [UI & Palette Philosophy](#ui--palette-philosophy)
+  - [3D Rotating Black Hole Loader](#3d-rotating-black-hole-loader)
 - [Physics & Relativistic Optics](#physics--relativistic-optics)
   - [Kerr-Schild Metric & Geodesics](#kerr-schild-metric--geodesics)
   - [Novikov–Thorne Accretion Disk](#novikovthorne-accretion-disk)
@@ -77,7 +88,47 @@ Unlike conventional graphics simulations that use texture tricks or pre-rendered
 - **Interactive Light Diagram**: Real-time 2D equatorial plane diagram showing light rays emitted from the camera deflected around the photon sphere and shadow.
 - **Simulated EHT Mode**: 1.3 mm VLBI radio telescope resolution simulation using multi-scale Gaussian beam convolution mimicking images from the Event Horizon Telescope (M87* and Sgr A*).
 - **Ultra-Smooth Startup**: Progressive asynchronous compilation, phased cubemap generation, and offscreen GPU pipeline warmup with an animated celestial loading screen (no stutter, no freezes).
+- **Starlit / Celestial Rose Aesthetics**: Deep obsidian plum theme (`#150a14`), glowing celestial rose controls (`#f0abc5`), translucent glassmorphic cards (`blur(20px)`), and instant 3D rotating black hole loader.
 - **Adaptive Performance**: Dynamic resolution scaling and TAAU target a locked 60 FPS across high-end desktop GPUs down to lightweight laptops.
+
+---
+
+## Starlit / Celestial Rose Design System
+
+The simulation's interface is built on the signature **Starlit / Celestial Rose** design language, unifying cosmic telemetry with celestial aesthetics:
+
+<div align="center">
+  <img src="assets/preview.png" alt="Starlit Design System Overview" width="880" style="border-radius: 14px; box-shadow: 0 12px 36px rgba(240,171,197,0.18);" />
+</div>
+
+<br/>
+
+### UI & Palette Philosophy
+
+| Token / Layer | Color Code | Visual Role & Implementation |
+| :--- | :---: | :--- |
+| **Cosmic Deep Space** | `#150a14` · `#07040a` | Deep obsidian plum and velvet space background void |
+| **Glassmorphic Panels** | `rgba(25, 12, 24, 0.68)` | Multi-pass background blur (`backdrop-filter: blur(20px)`), `18px` rounded corners, and soft inner glow |
+| **Border Accents** | `rgba(240, 171, 197, 0.20)` | Subtle rose hairline borders separating telemetry controls from cosmic rays |
+| **Celestial Rose** | `#f0abc5` | Primary telemetry glow, active state rings, and ISCO characteristic orbit indicators |
+| **Starlight Pink** | `#ffd3e0` | Secondary highlights, gradient slider progress fill, and typography accents |
+| **Doppler Cyan** | `#8fb7ff` | Relativistic kinematic blueshift indicators and escaping light ray vectors |
+| **Mode Capsule** | Floating Pill | Floating pill navigation island with glowing rose active states (`.on`) |
+| **2D Equatorial Canvas** | Canvas HUD | Real-time deflection tracks with `#f0abc5` ISCO, spin direction arrow, and camera position |
+
+### 3D Rotating Black Hole Loader
+
+<div align="center">
+  <img src="assets/loader.png" alt="3D Black Hole Loader Detail" width="560" style="border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.9);" />
+</div>
+
+<br/>
+
+Borrowed from the portfolio site design and adapted for real-time physics:
+- **3D Optical Occlusion**: Built using two independent depth layers (`.loader__disk` in the background, and `.loader__disk--front` with `clip-path: inset(50% 0 0 0)` positioned inside the shadow). This correctly renders the front half of the disk in front of the event horizon and the rear half behind it, creating an authentic 3D optical lens illusion.
+- **Dual Counter-Rotating Conic Convection**: Two layered noise gradients spin at $2.8\text{ s}$ and $7.0\text{ s}$ with an axial tilt of $6^\circ$, modeling turbulent differential shearing.
+- **Zero-Delay Instant First-Paint**: Positioned at the very top of `<body>` with zero entrance delays or CSS blur latencies. The entire 3D black hole, starry sky, and loading telemetry render immediately on frame 0, eliminating blank screens.
+- **Tabular Mono Telemetry**: Monospace progress counter (`000%` to `100%`) with animated gradient fill bar and smooth scale-dissolve exit (`.is-leaving`).
 
 ---
 
@@ -352,7 +403,8 @@ blachole-simulation/
 │   ├── qgrowth.js          # Momentum vector growth analysis for ray termination
 │   └── cdp.js              # Headless Chrome DevTools Protocol automation and test harness
 ├── assets/
-│   └── preview.png         # Simulation preview screenshot
+│   ├── preview.png         # Simulation Starlit UI screenshot
+│   └── loader.png          # 3D rotating black hole loader screenshot
 ├── README.md               # English documentation
 └── README.tr.md            # Turkish documentation
 ```
