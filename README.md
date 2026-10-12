@@ -4,13 +4,17 @@
 
 **Real-Time General Relativistic Ray Tracing in WebGL 2**
 
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-GitHub%20Pages-e7a0b9?style=for-the-badge&logo=github&logoColor=white)](https://hfatih.github.io/blachole-simulation/)
+
+<br/>
+
 [![WebGL 2](https://img.shields.io/badge/WebGL-2.0-blue.svg?style=flat-square)](https://www.khronos.org/registry/webgl/specs/latest/2.0/)
 [![Vanilla JavaScript](https://img.shields.io/badge/JavaScript-Vanilla%20ES2022-yellow.svg?style=flat-square)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 [![GLSL](https://img.shields.io/badge/Shaders-GLSL%203.00%20ES-orange.svg?style=flat-square)](https://www.khronos.org/registry/OpenGL/specs/es/3.0/GLSL_ES_Specification_3.00.pdf)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)](LICENSE)
 [![Zero Dependencies](https://img.shields.io/badge/Dependencies-0-brightgreen.svg?style=flat-square)](#)
 
-[English](README.md) · [Türkçe](README.tr.md)
+[✦ Live Simulation](https://hfatih.github.io/blachole-simulation/) · [English](README.md) · [Türkçe](README.tr.md)
 
 <br/>
 
