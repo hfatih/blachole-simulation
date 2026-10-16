@@ -405,6 +405,7 @@ blachole-simulation/
 ├── assets/
 │   ├── preview.png         # Simulation Starlit UI screenshot
 │   └── loader.png          # 3D rotating black hole loader screenshot
+├── LICENSE                 # MIT License
 ├── README.md               # English documentation
 └── README.tr.md            # Turkish documentation
 ```
