@@ -394,6 +394,7 @@ blachole-simulation/
 ├── assets/
 │   ├── preview.png         # Simülasyon Starlit pembe arayüz önizlemesi
 │   └── loader.png          # 3D dönen kara delik yükleme ekranı ekran görüntüsü
+├── LICENSE                 # MIT Lisansı
 ├── README.md               # İngilizce dokümantasyon
 └── README.tr.md            # Türkçe dokümantasyon
 ```
