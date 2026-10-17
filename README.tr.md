@@ -16,6 +16,8 @@
 [![Lisans: MIT](https://img.shields.io/badge/Lisans-MIT-green.svg?style=flat-square)](LICENSE)
 [![Bağımlılık Yok](https://img.shields.io/badge/Bağımlılık-0-brightgreen.svg?style=flat-square)](#)
 
+![Views](https://hits.sh/github.com/hfatih/blachole-simulation.svg?style=flat-square&label=g%C3%B6r%C3%BCnt%C3%BClenme&color=e7a0b9) [![Stars](https://img.shields.io/github/stars/hfatih/blachole-simulation?style=flat-square&label=y%C4%B1ld%C4%B1z&color=f0abc5)](https://github.com/hfatih/blachole-simulation/stargazers) [![Forks](https://img.shields.io/github/forks/hfatih/blachole-simulation?style=flat-square&label=fork&color=dba8c2)](https://github.com/hfatih/blachole-simulation/forks) [![Last commit](https://img.shields.io/github/last-commit/hfatih/blachole-simulation?style=flat-square&label=son%20commit&color=bca4dd)](https://github.com/hfatih/blachole-simulation/commits)
+
 [✦ Canlı Simülasyon (blackhole.hfatih.com)](https://blackhole.hfatih.com) · [GitHub Pages](https://hfatih.github.io/blachole-simulation/) · [English](README.md) · [Türkçe](README.tr.md)
 
 <br/>

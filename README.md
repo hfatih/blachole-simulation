@@ -16,6 +16,8 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg?style=flat-square)](LICENSE)
 [![Zero Dependencies](https://img.shields.io/badge/Dependencies-0-brightgreen.svg?style=flat-square)](#)
 
+![Views](https://hits.sh/github.com/hfatih/blachole-simulation.svg?style=flat-square&label=views&color=e7a0b9) [![Stars](https://img.shields.io/github/stars/hfatih/blachole-simulation?style=flat-square&label=stars&color=f0abc5)](https://github.com/hfatih/blachole-simulation/stargazers) [![Forks](https://img.shields.io/github/forks/hfatih/blachole-simulation?style=flat-square&label=forks&color=dba8c2)](https://github.com/hfatih/blachole-simulation/forks) [![Last commit](https://img.shields.io/github/last-commit/hfatih/blachole-simulation?style=flat-square&label=last%20commit&color=bca4dd)](https://github.com/hfatih/blachole-simulation/commits)
+
 [✦ Live Simulation (blackhole.hfatih.com)](https://blackhole.hfatih.com) · [GitHub Pages](https://hfatih.github.io/blachole-simulation/) · [English](README.md) · [Türkçe](README.tr.md)
 
 <br/>
