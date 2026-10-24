@@ -282,8 +282,11 @@ No external PNG/JPG textures are bundled with the repository. The cosmic skybox 
 
 ## Quick Start
 
-### Requirements
-- Any modern web browser with **WebGL 2** support (Google Chrome, Microsoft Edge, Mozilla Firefox, Apple Safari).
+### Hardware & WebGL 2 Requirements
+- **WebGL 2.0 Core**: Canvas rendering context (`webgl2`).
+- **`EXT_color_buffer_float`**: Required for floating-point HDR and TAAU render targets.
+- **`OES_texture_float_linear`**: Linear filtering on floating-point textures for dual-pyramid bloom.
+- **`EXT_disjoint_timer_query_webgl2`** *(optional)*: Nanosecond GPU hardware timer profiling for the real-time HUD.
 - No Node.js packages, npm dependencies, or build tools are required to run the simulation.
 
 ### Option 1: Direct File Opening
