@@ -272,9 +272,12 @@ Projeye hiçbir dış resim dosyası eklenmemiştir:
 
 ## Hızlı Başlangıç
 
-### Gereksinimler
-- Güncel bir **WebGL 2** destekli tarayıcı (Google Chrome, Microsoft Edge, Mozilla Firefox veya Apple Safari).
-- Hiçbir paket yöneticisi, npm kurulumu ya da derleme aracı gerekmez.
+### Donanım ve WebGL 2 Gereksinimleri
+- **WebGL 2.0 Çekirdeği**: Çizim bağlamı (`webgl2`).
+- **`EXT_color_buffer_float`**: HDR ve TAAU için kayan noktalı render hedefleri.
+- **`OES_texture_float_linear`**: Parlama (bloom) için kayan noktalı dokularda doğrusal filtreleme.
+- **`EXT_disjoint_timer_query_webgl2`** *(isteğe bağlı)*: Arayüzdeki gerçek zamanlı nanosaniye GPU profillemesi.
+- Hiçbir harici paket ya da derleme aracı gerekmez.
 
 ### Yöntem 1: Doğrudan Açma
 `index.html` dosyasını tarayıcınıza sürükleyip bırakarak veya çift tıklayarak doğrudan açabilirsiniz.
